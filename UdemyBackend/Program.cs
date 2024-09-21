@@ -1,15 +1,22 @@
+using UdemyBackend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Inyección de dependencia de la interface con su implementación para usarla en los controllers
+// builder.Services.AddSingleton<IPeopleService, PeopleService>();
+
+// Nueva forma de inyección mediante key (.NET 8)
+builder.Services.AddKeyedSingleton<IPeopleService, PeopleService>("peopleService");
+builder.Services.AddKeyedSingleton<IRandomService, RandomService>("randomSingleton");
+builder.Services.AddKeyedScoped<IRandomService, RandomService>("randomScoped");
+builder.Services.AddKeyedTransient<IRandomService, RandomService>("randomTransient");
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

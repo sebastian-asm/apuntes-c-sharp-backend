@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UdemyBackend.Services;
 
 namespace UdemyBackend.Controllers
 {
@@ -6,6 +7,21 @@ namespace UdemyBackend.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
+        // Sin inyección de dependencia
+        //private IPeopleService _peopleService;
+        //public PeopleController()
+        //{
+        //    _peopleService = new PeopleService();
+        //}
+
+        // Con inyección de dependencia
+        private IPeopleService _peopleService;
+
+        public PeopleController([FromKeyedServices("peopleService")] IPeopleService peopleService)
+        {
+            _peopleService = peopleService;
+        }
+
         [HttpGet("all")]
         public List<People> GetPeoples() => Repository.People;
 
@@ -27,7 +43,7 @@ namespace UdemyBackend.Controllers
         // la interface IActionResult nos da más flexibilidad que la clase ActionResult
         public IActionResult Add(People people)
         {
-            if (string.IsNullOrEmpty(people.Name)) return BadRequest();
+            if (!_peopleService.Validate(people)) return BadRequest();
             Repository.People.Add(people);
             // Se indica que todo salio ok pero no se devuelve nada
             return NoContent();

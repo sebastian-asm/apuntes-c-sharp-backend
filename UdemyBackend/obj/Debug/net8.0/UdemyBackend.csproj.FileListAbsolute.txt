@@ -30,3 +30,4 @@ C:\Users\sebas\source\repos\UdemyBackend\UdemyBackend\obj\Debug\net8.0\refint\Ud
 C:\Users\sebas\source\repos\UdemyBackend\UdemyBackend\obj\Debug\net8.0\UdemyBackend.pdb
 C:\Users\sebas\source\repos\UdemyBackend\UdemyBackend\obj\Debug\net8.0\UdemyBackend.genruntimeconfig.cache
 C:\Users\sebas\source\repos\UdemyBackend\UdemyBackend\obj\Debug\net8.0\ref\UdemyBackend.dll
+C:\Users\sebas\source\repos\UdemyBackend\UdemyBackend\obj\Debug\net8.0\UdemyBackend.sourcelink.json
