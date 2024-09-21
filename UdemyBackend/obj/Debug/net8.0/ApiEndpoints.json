@@ -147,5 +147,25 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "UdemyBackend.Controllers.SomeController",
+    "Method": "Async",
+    "RelativePath": "api/Some/async",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UdemyBackend.Controllers.SomeController",
+    "Method": "Sync",
+    "RelativePath": "api/Some/sync",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]
