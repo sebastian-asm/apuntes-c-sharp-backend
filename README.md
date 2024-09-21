@@ -20,7 +20,14 @@ El **services** es donde va la lógica de negocio y la validación de los datos 
 
 ![Tipos de inyección](public/image.png)
 
+**Models**
+
+- **Modelo**: representación de una entidad en la base de datos
+- **DTO (Data Transfers Object)**: objeto para la transferencia de datos, el cual tiene como ventaja indicar cuantos datos son los que viajan entre cada capa.
+
 Cuando se mando un JSON en el body, .NET lo toma de manera automática y lo serializa para usar esa informacion en nuestro código.
+
+La diferencia entre un **List** y un **IEnumerable**, es que List es una clase que contiene muchos métodos para la manipulación de datos, en cambio, IEnumerable (que es solo de lectura) solo tiene lo necesario para iterar datos haciendo que sea más eficiente que List.
 
 _**Créditos:**_
 
