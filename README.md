@@ -29,6 +29,28 @@ Cuando se mando un JSON en el body, .NET lo toma de manera automática y lo seri
 
 La diferencia entre un **List** y un **IEnumerable**, es que List es una clase que contiene muchos métodos para la manipulación de datos, en cambio, IEnumerable (que es solo de lectura) solo tiene lo necesario para iterar datos haciendo que sea más eficiente que List.
 
+### Entity Framework
+
+ORM que tiene por defecto .NET, el cual permite mapear una base de datos. Por ejemplo, si en la db existe una tabla _user_, Entity la llevará al código en forma de clase y/o viceversa.
+
+Las **migraciones** nos permite llevar un control de versiones de nuestra db, ver que cambios se han hecho con cada iteración y en caso de ser necesario hacer un rollback.
+
+Para hacer una migración, se realiza mediante la _Consola del Administrador de paquetes_.
+
+1. Generar una migración: `Add-Migration <nombre>`
+2. Aplicar la migración en la db: `Update-Database`
+
+Estos pasos se repiten cada que se hace alguna modificación del modelo.
+
+- Revertir la migración: `Remove-Migration`
+
+![Consola del Administrador de paquetes](public/image2.png)
+
+Paquetes a instalar mediante NuGet:
+
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
+
 _**Créditos:**_
 
 👉 [https://www.udemy.com/course/aprende-programacion-backend-en-c-net/](https://www.udemy.com/course/aprende-programacion-backend-en-c-net/)

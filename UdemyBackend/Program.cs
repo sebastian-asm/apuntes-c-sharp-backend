@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using UdemyBackend.Models;
 using UdemyBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,12 @@ builder.Services.AddHttpClient<IPostsService, PostsService>(client =>
     // Leyendo la url desde el archivo appsettings.json
     // El ! es para indicar que el valor en este punto no es nulo
     client.BaseAddress = new Uri(builder.Configuration["BaseUrlPosts"]!);
+});
+
+// Inyención de la base de datos
+builder.Services.AddDbContext<StoreContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("StoreConnection"));
 });
 
 builder.Services.AddControllers();
