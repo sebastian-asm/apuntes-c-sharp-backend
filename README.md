@@ -22,7 +22,7 @@ El **services** es donde va la lógica de negocio y la validación de los datos 
 
 **Models**
 
-- **Modelo**: representación de una entidad en la base de datos
+- **Modelo**: representación de una entidad en la base de datos (no siempre contiene los mismo datos de un DTO).
 - **DTO (Data Transfers Object)**: objeto para la transferencia de datos, el cual tiene como ventaja indicar cuantos datos son los que viajan entre cada capa.
 
 Cuando se mando un JSON en el body, .NET lo toma de manera automática y lo serializa para usar esa informacion en nuestro código.
