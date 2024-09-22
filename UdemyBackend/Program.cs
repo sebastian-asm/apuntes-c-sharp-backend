@@ -1,6 +1,9 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using UdemyBackend.DTOs;
 using UdemyBackend.Models;
 using UdemyBackend.Services;
+using UdemyBackend.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,10 @@ builder.Services.AddDbContext<StoreContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("StoreConnection"));
 });
+
+// Validaciones con FluentValidator
+builder.Services.AddScoped<IValidator<BeerInsertDto>, BeerInsertValidator>();
+builder.Services.AddScoped<IValidator<BeerUpdateDto>, BeerUpdateValidator>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
