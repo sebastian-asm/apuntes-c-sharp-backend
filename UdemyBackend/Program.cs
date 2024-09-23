@@ -15,6 +15,7 @@ builder.Services.AddKeyedSingleton<IPeopleService, PeopleService>("peopleService
 builder.Services.AddKeyedSingleton<IRandomService, RandomService>("randomSingleton");
 builder.Services.AddKeyedScoped<IRandomService, RandomService>("randomScoped");
 builder.Services.AddKeyedTransient<IRandomService, RandomService>("randomTransient");
+builder.Services.AddKeyedScoped<ICommonService<BeerDto, BeerInsertDto, BeerUpdateDto>, BeerService>("beerService");
 
 // Patrón de diseño Factory (en este caso crear objetos tipo HttpClient con una 
 // configuración inicial, para luego inyectarlo en nuestros servicios o controladores
