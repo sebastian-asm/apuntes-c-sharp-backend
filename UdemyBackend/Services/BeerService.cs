@@ -1,29 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UdemyBackend.DTOs;
+﻿using UdemyBackend.DTOs;
 using UdemyBackend.Models;
+using UdemyBackend.Repository;
 
 namespace UdemyBackend.Services
 {
     public class BeerService : ICommonService<BeerDto, BeerInsertDto, BeerUpdateDto>
     {
-        private StoreContext _context;
+        private IRepository<Beer> _beerRepository;
 
-        public BeerService(StoreContext context)
+        public BeerService(IRepository<Beer> beerRepository)
         {
-            _context = context;
+            _beerRepository = beerRepository;
         }
 
-        public async Task<IEnumerable<BeerDto>> Get() => await _context.Beers.Select(beer => new BeerDto
+        public async Task<IEnumerable<BeerDto>> Get()
         {
-            Id = beer.Id,
-            Name = beer.Name,
-            Alcohol = beer.Alcohol,
-            BrandId = beer.BrandId,
-        }).ToListAsync();
+            var beers = await _beerRepository.Get();
+            return beers.Select(beer => new BeerDto()
+            {
+                Id = beer.Id,
+                Name = beer.Name,
+                Alcohol = beer.Alcohol,
+                BrandId = beer.BrandId,
+            });
+        }
 
         public async Task<BeerDto> GetById(int id)
         {
-            var beer = await _context.Beers.FindAsync(id);
+            var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
                 var beerDto = new BeerDto
@@ -47,9 +51,9 @@ namespace UdemyBackend.Services
                 BrandId = beerInsertDto.BrandId
             };
 
-            await _context.Beers.AddAsync(beer);
+            await _beerRepository.Add(beer);
             // Con esta instrucción los datos se guardan en la db
-            await _context.SaveChangesAsync();
+            await _beerRepository.Save();
 
             var beerDto = new BeerDto
             {
@@ -64,13 +68,15 @@ namespace UdemyBackend.Services
 
         public async Task<BeerDto> Update(int id, BeerUpdateDto beerUpdateDto)
         {
-            var beer = await _context.Beers.FindAsync(id);
+            var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
                 beer.Name = beerUpdateDto.Name;
                 beer.Alcohol = beerUpdateDto.Alcohol;
                 beer.BrandId = beerUpdateDto.BrandId;
-                await _context.SaveChangesAsync();
+
+                _beerRepository.Update(beer);
+                await _beerRepository.Save();
 
                 var beerDto = new BeerDto
                 {
@@ -86,7 +92,7 @@ namespace UdemyBackend.Services
 
         public async Task<BeerDto> Delete(int id)
         {
-            var beer = await _context.Beers.FindAsync(id);
+            var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
                 var beerDto = new BeerDto
@@ -97,8 +103,8 @@ namespace UdemyBackend.Services
                     BrandId = beer.BrandId
                 };
 
-                _context.Remove(beer);
-                await _context.SaveChangesAsync();
+                _beerRepository.Delete(beer);
+                await _beerRepository.Save();
                 return beerDto;
             }
             return null;

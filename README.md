@@ -51,6 +51,13 @@ Paquetes a instalar mediante NuGet:
 - Microsoft.EntityFrameworkCore.SqlServer
 - Microsoft.EntityFrameworkCore.Tools
 
+### Repository
+
+Es la capa encargada de la persistencia de la información, y donde la capa de servicio solo se comienza a enfocar de la lógica de negocio. Esto quiere decir que si necesitamos el contexto de Entity lo haríamos mediante repository.
+
+![Repository](public/image3.png)
+
 _**Créditos:**_
 
-👉 [https://www.udemy.com/course/aprende-programacion-backend-en-c-net/](https://www.udemy.com/course/aprende-programacion-backend-en-c-net/)
+👉 [https://www.udemy.com/course/aprende-programacion-backend-en-c-net/](https://www.udemy.com/course/aprende-programacion-backend-en-c-net/)  
+👉 [https://github.com/emigallo-edu/net-web-api/blob/master/Presentations/content.md](https://github.com/emigallo-edu/net-web-api/blob/master/Presentations/content.md)

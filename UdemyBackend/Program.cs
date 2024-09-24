@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using UdemyBackend.DTOs;
 using UdemyBackend.Models;
+using UdemyBackend.Repository;
 using UdemyBackend.Services;
 using UdemyBackend.Validators;
 
@@ -36,6 +37,9 @@ builder.Services.AddDbContext<StoreContext>(options =>
 // Validaciones con FluentValidator
 builder.Services.AddScoped<IValidator<BeerInsertDto>, BeerInsertValidator>();
 builder.Services.AddScoped<IValidator<BeerUpdateDto>, BeerUpdateValidator>();
+
+// Repository
+builder.Services.AddScoped<IRepository<Beer>, BeerRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
