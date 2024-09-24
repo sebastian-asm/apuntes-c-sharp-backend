@@ -59,7 +59,7 @@ Es la capa encargada de la persistencia de la información, y donde la capa de s
 
 ### AutoMappers
 
-Técnica que nos ahorra la tarea de estar asignando valores campo a campo o la transformación de un objecto a otro.
+Técnica que nos ahorra la tarea de estar asignando valores campo a campo o la transformación de un objecto a otro. Para ello es necesario la instalación del paquete AutoMapper mediante NuGet.
 
 _**Créditos:**_
 
