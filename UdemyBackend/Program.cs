@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using UdemyBackend.Automappers;
 using UdemyBackend.DTOs;
 using UdemyBackend.Models;
 using UdemyBackend.Repository;
@@ -40,6 +41,9 @@ builder.Services.AddScoped<IValidator<BeerUpdateDto>, BeerUpdateValidator>();
 
 // Repository
 builder.Services.AddScoped<IRepository<Beer>, BeerRepository>();
+
+// Mappers
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

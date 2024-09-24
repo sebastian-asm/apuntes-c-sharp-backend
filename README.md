@@ -57,6 +57,10 @@ Es la capa encargada de la persistencia de la información, y donde la capa de s
 
 ![Repository](public/image3.png)
 
+### AutoMappers
+
+Técnica que nos ahorra la tarea de estar asignando valores campo a campo o la transformación de un objecto a otro.
+
 _**Créditos:**_
 
 👉 [https://www.udemy.com/course/aprende-programacion-backend-en-c-net/](https://www.udemy.com/course/aprende-programacion-backend-en-c-net/)  

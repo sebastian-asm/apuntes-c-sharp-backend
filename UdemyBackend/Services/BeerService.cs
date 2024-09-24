@@ -1,4 +1,5 @@
-﻿using UdemyBackend.DTOs;
+﻿using AutoMapper;
+using UdemyBackend.DTOs;
 using UdemyBackend.Models;
 using UdemyBackend.Repository;
 
@@ -7,22 +8,18 @@ namespace UdemyBackend.Services
     public class BeerService : ICommonService<BeerDto, BeerInsertDto, BeerUpdateDto>
     {
         private IRepository<Beer> _beerRepository;
+        private IMapper _mapper;
 
-        public BeerService(IRepository<Beer> beerRepository)
+        public BeerService(IRepository<Beer> beerRepository, IMapper mapper)
         {
             _beerRepository = beerRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<BeerDto>> Get()
         {
             var beers = await _beerRepository.Get();
-            return beers.Select(beer => new BeerDto()
-            {
-                Id = beer.Id,
-                Name = beer.Name,
-                Alcohol = beer.Alcohol,
-                BrandId = beer.BrandId,
-            });
+            return beers.Select(beer => _mapper.Map<BeerDto>(beer));
         }
 
         public async Task<BeerDto> GetById(int id)
@@ -30,13 +27,7 @@ namespace UdemyBackend.Services
             var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
-                var beerDto = new BeerDto
-                {
-                    Id = beer.Id,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandId = beer.BrandId,
-                };
+                var beerDto = _mapper.Map<BeerDto>(beer);
                 return beerDto;
             }
             return null;
@@ -44,25 +35,14 @@ namespace UdemyBackend.Services
 
         public async Task<BeerDto> Add(BeerInsertDto beerInsertDto)
         {
-            var beer = new Beer()
-            {
-                Name = beerInsertDto.Name,
-                Alcohol = beerInsertDto.Alcohol,
-                BrandId = beerInsertDto.BrandId
-            };
+            // A partir de beerInsertDto se necesita un Beer
+            var beer = _mapper.Map<Beer>(beerInsertDto);
 
             await _beerRepository.Add(beer);
             // Con esta instrucción los datos se guardan en la db
             await _beerRepository.Save();
 
-            var beerDto = new BeerDto
-            {
-                Id = beer.Id,
-                Name = beer.Name,
-                Alcohol = beer.Alcohol,
-                BrandId = beer.BrandId
-            };
-
+            var beerDto = _mapper.Map<BeerDto>(beer);
             return beerDto;
         }
 
@@ -71,20 +51,12 @@ namespace UdemyBackend.Services
             var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
-                beer.Name = beerUpdateDto.Name;
-                beer.Alcohol = beerUpdateDto.Alcohol;
-                beer.BrandId = beerUpdateDto.BrandId;
-
+                // Editar el objeto existente
+                beer = _mapper.Map<BeerUpdateDto, Beer>(beerUpdateDto, beer);
                 _beerRepository.Update(beer);
                 await _beerRepository.Save();
 
-                var beerDto = new BeerDto
-                {
-                    Id = beer.Id,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandId = beer.BrandId
-                };
+                var beerDto = _mapper.Map<BeerDto>(beer);
                 return beerDto;
             }
             return null;
@@ -95,14 +67,7 @@ namespace UdemyBackend.Services
             var beer = await _beerRepository.GetById(id);
             if (beer != null)
             {
-                var beerDto = new BeerDto
-                {
-                    Id = beer.Id,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandId = beer.BrandId
-                };
-
+                var beerDto = _mapper.Map<BeerDto>(beer);
                 _beerRepository.Delete(beer);
                 await _beerRepository.Save();
                 return beerDto;
