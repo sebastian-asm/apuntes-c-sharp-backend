@@ -41,6 +41,8 @@ namespace UdemyBackend.Controllers
             var validationResult = await _beerInsertValidator.ValidateAsync(beerInsertDto);
             if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
+            if (!_beerService.Validate(beerInsertDto)) return BadRequest(_beerService.Errors);
+
             var beerDto = await _beerService.Add(beerInsertDto);
             // Primer parámetro es la ruta para obtener el recurso (aplicado en el header como Location)
             // El segundo es el dato que necesita el primer recurso
@@ -53,6 +55,8 @@ namespace UdemyBackend.Controllers
         {
             var validationResult = await _beerUpdateValidator.ValidateAsync(beerUpdateDto);
             if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+            if (!_beerService.Validate(beerUpdateDto)) return BadRequest(_beerService.Errors);
 
             var beerDto = await _beerService.Update(id, beerUpdateDto);
             return beerDto == null ? NotFound() : Ok(beerDto);

@@ -9,11 +9,13 @@ namespace UdemyBackend.Services
     {
         private IRepository<Beer> _beerRepository;
         private IMapper _mapper;
+        public List<string> Errors { get; }
 
         public BeerService(IRepository<Beer> beerRepository, IMapper mapper)
         {
             _beerRepository = beerRepository;
             _mapper = mapper;
+            Errors = new List<string>();
         }
 
         public async Task<IEnumerable<BeerDto>> Get()
@@ -73,6 +75,26 @@ namespace UdemyBackend.Services
                 return beerDto;
             }
             return null;
+        }
+
+        public bool Validate(BeerInsertDto beerInsertDto)
+        {
+            if (_beerRepository.Search(b => b.Name == beerInsertDto.Name).Count() > 0)
+            {
+                Errors.Add("No puede existir un producto con el mismo nombre");
+                return false;
+            }
+            return true;
+        }
+
+        public bool Validate(BeerUpdateDto beerUpdateDto)
+        {
+            if (_beerRepository.Search(b => b.Name == beerUpdateDto.Name && b.Id != beerUpdateDto.Id).Count() > 0)
+            {
+                Errors.Add("No puede existir un producto con el mismo nombre");
+                return false;
+            }
+            return true;
         }
     }
 }
